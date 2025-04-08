@@ -1,0 +1,254 @@
+% FortySecondsCV LaTeX template
+% Copyright © 2019 René Wirnata <rene.wirnata@pandascience.net>
+% Licensed under the 3-Clause BSD License. See LICENSE file for details.
+%
+% Attributions
+% ------------
+% * fortysecondscv is based on the twentysecondcv class by Carmine Spagnuolo 
+%   (cspagnuolo@unisa.it), released under the MIT license and available under
+%   https://github.com/spagnuolocarmine/TwentySecondsCurriculumVitae-LaTex
+% * further attributions are indicated immediately before corresponding code
+
+
+%-------------------------------------------------------------------------------
+%                             ADDITIONAL PACKAGES
+%-------------------------------------------------------------------------------
+\documentclass[
+  a4paper,
+%   showframes,
+%   maincolor=red,
+%   sectioncolor=red,
+%   subsectioncolor=orange
+%   sidebarwidth=0.4\paperwidth,
+%   topbottommargin=0.03\paperheight,
+%   leftrightmargin=20pt
+]{fortysecondscv}
+
+% improve word spacing and hyphenation
+\usepackage{microtype}
+\usepackage{ragged2e}
+
+\usepackage{fontawesome}
+\usepackage{setspace}
+
+% take care of proper font encoding
+\ifxetex
+	\usepackage{fontspec}
+	\defaultfontfeatures{Ligatures=TeX}
+% \newfontfamily\headingfont[Path = fonts/]{segoeuib.ttf} % local font
+\else
+	\usepackage[utf8]{inputenc}
+	\usepackage[T1]{fontenc}
+% \usepackage[sfdefault]{noto} % use noto google font
+\fi
+
+% enable mathematical syntax for some symbols like \varnothing
+\usepackage{amssymb}
+
+\usepackage{xcolor}
+
+% Include the hyperref package
+\usepackage{hyperref}
+
+% Define a custom color using the RGB color model
+\definecolor{customblue}{HTML}{3695de}
+
+% Define a new command for colored bold text
+\newcommand{\coloredbf}[1]{\textbf{\textcolor{customblue}{#1}}}
+
+% bubble diagram configuration
+\usepackage{smartdiagram}
+\smartdiagramset{
+  % defaut font size is \large, so adjust to harmonize with sidebar layout
+  bubble center node font = \footnotesize,
+  bubble node font = \footnotesize,
+  % default: 4cm/2.5cm; make minimum diameter relative to sidebar size
+  bubble center node size = 0.4\sidebartextwidth,
+  bubble node size = 0.25\sidebartextwidth,
+  distance center/other bubbles = 1.5em,
+  % set center bubble color
+  bubble center node color = maincolor!70,
+  % define the list of colors usable in the diagram
+  set color list = {maincolor!10, maincolor!40,
+  maincolor!20, maincolor!60, maincolor!35},
+  % sets the opacity at which the bubbles are shown
+  bubble fill opacity = 0.8,
+}
+
+
+%-------------------------------------------------------------------------------
+%                            PERSONAL INFORMATION
+%-------------------------------------------------------------------------------
+% profile picture
+
+% your name
+\cvname{\Large{Higor Felype S. Carvalho}}
+% job title/career
+\cvjobtitle{\large{Frontend Developer | React, React Native, Next.js}}
+% date of birth
+\cvbirthday{06 de Abril, 1996}
+% short address/location, use \newline if more than 1 line is required
+\cvaddress{Natal/RN}
+% phone number
+\cvphone{(84) 9 9611-3703}
+% email address
+\cvmail{felype.cet.15@gmail.com}
+
+\cvlinkedin{https://linkedin.com/in/higor21/}
+\cvgit{https://github.com/higor21}
+% personal website
+\cvsite{https://higor21.github.io/}
+
+
+%-------------------------------------------------------------------------------
+%                              SIDEBAR 1st PAGE
+%-------------------------------------------------------------------------------
+% overwrite default icons and order of personal information
+
+% add more profile sections to sidebar on first page
+
+\addtofrontsidebar{
+	% include gosquare national flags from https://github.com/gosquared/flags;
+	% naming according to ISO 3166-1 alpha-2 country codes
+	\graphicspath{{pics/flags/}}
+
+	\profilesection{About}
+    	\aboutme{
+    	    Frontend Developer with 4+ years of experience specializing in \textbf{React}, \textbf{React Native}, and \textbf{Next.js}. Proficient in building scalable, high-performance web and mobile applications using modern tools like \textbf{TypeScript}, \textbf{Redux Toolkit}, and \textbf{Styled-Components}. Experienced in \textbf{Agile methodologies}, \textbf{CI/CD pipelines}, and \textbf{micro-frontend architecture}. Passionate about delivering user-centric solutions with a focus on \textbf{performance optimization}, \textbf{accessibility}, and \textbf{responsive design}.
+            }
+	
+	\profilesection{Languages}
+		\pointskill{\flag{BR.png}}{Portuguese}{5}
+      	\pointskill{\flag{GB.png}}{English (B2/C1 level)}{4}
+
+        \profilesection{Technical Skills}
+		\textbf{Frontend:} React, React Native, Next.js, TypeScript, JavaScript, Redux,            Zustand, Context API \\
+		\textbf{Testing:} Jest, Testing Library \\
+		\textbf{Styling:} Styled-Components, Sass \\
+		\textbf{Tools:} Git, Webpack, Babel, Docker\\
+		\textbf{Methodologies:} Agile, Scrum, Kanban, CI/CD\\
+		\textbf{Other:} REST API, GraphQL, Micro-Frontend, UI/UX Design, Responsive                Design, Accessibility (a11y), SEO
+
+}
+
+%-------------------------------------------------------------------------------
+%                         TABLE ENTRIES RIGHT COLUMN
+%-------------------------------------------------------------------------------
+\begin{document}
+
+\makefrontsidebar
+
+\cvsection{Education}
+\begin{cvtable}
+	\cvitem{2015 -- 2016}{Technician in Industrial Automation}{}{
+	   Graduated from Metrópole Digital Institute (IMD) linked to UFRN.
+	}\\
+	\cvitem{2015 -- 2018}{Bachelor in Sciences and Technology}{}{
+	    Graduated from Sciences and Technology School 
+	  linked to UFRN with emphasis in Computer Engineering.
+	}\\
+	\cvitem{2018 -- 2022}{Bachelor in Computer Engineering}{}{
+	    Graduate in progress from Computer and Automation Engineering Department linked to UFRN.
+	}
+\end{cvtable}
+
+
+\cvsection{Experience}
+\begin{cvtable}
+	\cvitem{07/2021 -- Present}{Frontend React and RN Developer}{OSF Digital}{
+    - Developed and maintained web and mobile applications for clients like \textbf{Creditas}, \textbf{Caixa Bank}, and \textbf{Porto Seguro}. \\
+    - Implemented \textbf{micro-frontend architecture} using \textbf{Next.js}, reducing deployment times by 25\%. \\
+    - Optimized React Native applications, improving performance by 30\%. \\
+    - Collaborated with cross-functional teams using \textbf{Agile methodologies} and \textbf{CI/CD pipelines}. \\
+    \coloredbf{Tools:} React, Next.js, React Native, TypeScript, Jest, Redux Toolkit, Zustand, Styled-Components, Sass, Scrum/Kanban.
+    }
+\\
+	\cvitem{05/2022 -- 02/2023}{Frontend RN Developer (Part-Time)}{Sinergia}{
+	    - Built a React Native application to connect players across gaming platforms, improving user engagement by 20\%. \\
+        - Utilized \textbf{TypeScript} and \textbf{Styled-Components} for scalable and maintainable code. \\
+        \coloredbf{Tools:} React Native, TypeScript, Styled-Components, Scrum.
+	}
+ \\
+	\cvitem{02/2021 -- 05/2021}{Fullstack Developer}{Wipro}{
+	     - Worked on the Direct Mobility System application for STTU, aiming to replace the legacy system. \\
+         - Developed features using \textbf{Angular 8}, \textbf{C#}, and \textbf{SQL}. \\
+         \coloredbf{Tools:} Angular 8, SQL, C#, MSTest, GitLab, Scrum.
+	}
+ \\
+	\cvitem{02/2020 -- 02/2021}{Frontend React and RN Developer}{Connecta}{
+	    - Developed web/mobile applications like \textbf{"Connecta Saúde"} and \textbf{"Quero Trabalhar"}. \\
+        - Integrated libraries like \textbf{React-pdf}, \textbf{Axios}, \textbf{Chart.js}, and \textbf{Leaflet}. \\
+        \coloredbf{Tools:} React, React Native, Redux, Saga, Styled-Components.
+	}
+ \\
+	\cvitem{08/2018 -- 02/2020}{Fullstack Developer Intern (Part-Time)}{TRT-21/RN}{
+            - Developed internal applications for TRT-21 employees. \\
+            - Assisted in preparing project documentation and manuals. \\
+            \coloredbf{Tools:} AngularJS, Angular 5/7, NodeJS, Java.
+            }
+\\
+    \cvitem{06/2019 -- 11/2019}{Fullstack React/Node Developer}{Multiprova - ECT/UFRN}{
+        - Developed the Multiprova/UFRN application to facilitate exams and exercises for tutors, professors, and students. \\
+        \coloredbf{Tools:} ReactJS, NodeJS, MongoDB, Docker, Scrum.
+    }
+\\
+    \cvitem{05/2018 -- 12/2019}{Logic/Language of Programming Monitor}{ECT/UFRN}{
+        - Assisted students in algorithm development and programming concepts. \\
+        \coloredbf{Tools:} JavaScript, C++.
+    }
+\end{cvtable}
+
+\cvsection{Projects}
+\begin{cvtable}
+    \cvitem{\faChevronCircleRight}{Porto Seguro Claims Tracking System}{Aug 2024 - Present}{
+        - Developed micro-frontend architecture using \textbf{React}, \textbf{React Query}, and \textbf{SCSS} to enhance claims tracking journey for brokers. \\
+        - Optimized component performance, resulting in 20\% faster load times.
+        - Improved apps response time through code optimization and React Query caching.
+    }\\
+    
+    \cvitem{\faChevronCircleRight}{Safra Link Banking App}{Nov 2023 - Jul 2024}{
+        - Built cross-platform mobile banking application using \textbf{React Native}, \textbf{Expo}, and \textbf{Zustand} state management. \\
+        - Implemented CI/CD pipelines, improving deployment time. \\
+        - Integrated financial APIs and implemented secure authentication flows. \\
+    }\\
+    
+    \cvitem{\faChevronCircleRight}{Caixa/CNP Portal}{Nov 2022 - Oct 2023}{
+        - Developed React.js portal serving as unified access point for multiple enterprise applications. \\
+        - Implemented responsive UI components with accessibility compliance. \\
+        - Reduced bundle size by 25\% through code splitting and lazy loading.
+    }\\
+    
+    \cvitem{\faChevronCircleRight}{Saúde Melhor Telemedicine Platform}{May 2020 - Jul 2021}{
+        - Created healthcare dashboard with video consultation and e-prescription features using \textbf{React} and \textbf{TypeScript}. \\
+        - Integrated WebRTC for real-time video communication between doctors and patients. \\
+        - Developed data visualization components using Chart.js for patient metrics.
+    }\\
+    
+    \cvitem{\faChevronCircleRight}{Creditas Payment Flow}{Aug 2021 - Oct 2022}{
+        - Implemented payment journey in React Native app using \textbf{clean architecture} principles. \\
+        - Wrote comprehensive unit tests with \textbf{Jest} and \textbf{React Native Testing Library} (90\% coverage). \\
+        - Conducted code reviews and mentored junior developers in best practices.
+        - Improved the clients payment journey increasing the CSAT by 23%
+    }\\
+    
+    \cvitem{\faChevronCircleRight}{GoGame Gaming Platform}{May 2022 - Feb 2023}{
+        - Built matchmaking system connecting players across platforms using \textbf{React Native} and \textbf{Firebase}. \\
+        - Implemented real-time chat functionality and tournament management features. \\
+        - Followed \textbf{Scrum} methodology with bi-weekly sprints.
+    }
+\end{cvtable}
+    	
+\cvsection{Certificates}
+\begin{cvtable}
+	\cvitem{2024}{\href{https://www.udemy.com/certificate/UC-a0e4c574-1bba-4f79-9ad1-fe4bc25d76e6/}{Microfrontends with React: A Complete Developer's Guide}}{}{}
+	\cvitem{2023}{\href{https://www.udemy.com/certificate/UC-8cea6a6c-8775-478b-9bf6-31c766fa77cb/}{GitLab CI: Pipelines, Continuous Delivery e Deployment}}{}{}
+	\cvitem{2023}{\href{}{Soft Skills: The 11 Essential Career Soft Skills}}{}{}
+	\cvitem{2022}{\href{https://ude.my/UC-fe077336-3574-4c2b-97ce-d3f40060e60d}{GraphQL by Example}}{}{}
+	\cvitem{2022}{\href{https://www.udemy.com/certificate/UC-1a0ac6b1-19ad-4d20-a731-9ca199685d21/}{Testing React with Jest and Testing Library}}{}{}
+	\cvitem{2020}{\href{shorturl.at/blnr9}{11ª OmniStack Week}}{}{}
+	\cvitem{2019}{\href{https://www.udemy.com/certificate/UC-JMNS7GHW/}{The Web Developer Bootcamp}}{}{}
+	\cvitem{2019}{\href{https://www.udemy.com/certificate/UC-XGSYIHMN/}{Building Web Applications with the New Angular (4, 5 e 6)}}{}{}
+\end{cvtable}
+
+
+\end{document}

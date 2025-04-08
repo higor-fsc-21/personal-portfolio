@@ -1,0 +1,205 @@
+@import "../../../styles/_variables";
+
+.admin-page {
+  padding: 1rem;
+
+  &__header {
+    margin-bottom: 2rem;
+  }
+
+  &__title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: $text-color;
+  }
+
+  &__content {
+    background-color: $bg-card;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    padding: 1.5rem;
+  }
+
+  &__error {
+    padding: 1rem;
+    background-color: rgba($danger-color, 0.1);
+    border-left: 4px solid $danger-color;
+    border-radius: $border-radius;
+    margin-bottom: 1.5rem;
+
+    p {
+      color: $danger-color;
+      margin: 0;
+    }
+  }
+}
+
+.admin-form {
+  width: 100%;
+  max-width: 100%;
+
+  &__field {
+    margin-bottom: 1.5rem;
+  }
+
+  &__label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: $text-color;
+  }
+
+  &__input,
+  &__textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    background-color: $bg-light;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &:focus {
+      border-color: $primary-color;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+    }
+
+    &:disabled {
+      background-color: rgba($border-color, 0.2);
+      cursor: not-allowed;
+    }
+  }
+
+  &__textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &__error {
+    color: $danger-color;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+
+    @media (max-width: 480px) {
+      flex-direction: column;
+    }
+  }
+
+  &__button {
+    padding: 0.75rem 1.5rem;
+    border-radius: $border-radius;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    border: none;
+    font-size: 1rem;
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    &--primary {
+      background-color: $primary-color;
+      color: white;
+
+      &:hover:not(:disabled) {
+        background-color: $primary-color-darker;
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(1px);
+      }
+    }
+
+    &--secondary {
+      background-color: transparent;
+      border: 1px solid $border-color;
+      color: $text-color;
+
+      &:hover:not(:disabled) {
+        background-color: rgba($border-color, 0.2);
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(1px);
+      }
+    }
+  }
+
+  &__tech-list {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  &__tech-item {
+    display: flex;
+    align-items: center;
+    background-color: rgba($primary-color, 0.1);
+    border-radius: $border-radius-sm;
+    padding: 0.25rem 0.5rem;
+
+    span {
+      margin-right: 0.5rem;
+      font-size: 0.875rem;
+    }
+
+    button {
+      background: none;
+      border: none;
+      color: $danger-color;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &__tech-input {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 0.5rem;
+
+    input {
+      flex: 1;
+      padding: 0.5rem;
+      border: 1px solid $border-color;
+      border-radius: $border-radius-sm;
+    }
+
+    button {
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      border-radius: $border-radius-sm;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $primary-color-darker;
+      }
+    }
+  }
+}
