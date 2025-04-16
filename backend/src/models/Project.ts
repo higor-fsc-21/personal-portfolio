@@ -5,7 +5,10 @@ export interface IProject extends BaseDocument, TimePeriod {
   title: string;
   description: string;
   technologies: string[];
-  imageUrl?: string;
+  images: {
+    url: string;
+    alt: string;
+  }[];
   githubUrl?: string;
 }
 
@@ -16,7 +19,12 @@ const projectSchema = new Schema<IProject>(
     startDate: { type: Date, required: true },
     endDate: { type: Date },
     technologies: [{ type: String }],
-    imageUrl: { type: String },
+    images: [
+      {
+        url: { type: String, required: true },
+        alt: { type: String, required: true },
+      },
+    ],
     githubUrl: { type: String },
   },
   {

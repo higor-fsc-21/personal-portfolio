@@ -6,6 +6,7 @@ import EducationController from "../controllers/EducationController";
 import SkillController from "../controllers/SkillController";
 import CertificateController from "../controllers/CertificateController";
 import { authenticateToken } from "../middlewares/auth";
+import { upload } from "../services/FileUploadService";
 
 const router = Router();
 
@@ -30,8 +31,18 @@ router.get("/certificates/:id", CertificateController.getById);
 
 // Protected routes (authentication required)
 // Projects
-router.post("/projects", authenticateToken, ProjectController.create);
-router.put("/projects/:id", authenticateToken, ProjectController.update);
+router.post(
+  "/projects",
+  authenticateToken,
+  upload.array("images", 5),
+  ProjectController.create
+);
+router.put(
+  "/projects/:id",
+  authenticateToken,
+  upload.array("images", 5),
+  ProjectController.update
+);
 router.delete("/projects/:id", authenticateToken, ProjectController.delete);
 
 // Experiences

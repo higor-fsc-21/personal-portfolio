@@ -13,7 +13,9 @@ export const api = {
    * Get all items from a specific endpoint
    */
   getAll: async <T>(endpoint: string): Promise<T[]> => {
-    const response = await axios.get<T[]>(`${API_BASE_URL}/${endpoint}`);
+    const response = await axios.get<T[]>(`${API_BASE_URL}/${endpoint}`, {
+      headers: getAuthHeader(),
+    });
     return response.data;
   },
 
@@ -21,24 +23,26 @@ export const api = {
    * Get a specific item by ID
    */
   getById: async <T>(endpoint: string, id: string): Promise<T> => {
-    const response = await axios.get<T>(`${API_BASE_URL}/${endpoint}/${id}`);
+    const response = await axios.get<T>(`${API_BASE_URL}/${endpoint}/${id}`, {
+      headers: getAuthHeader(),
+    });
     return response.data;
   },
 
   /**
    * Create a new item (requires authentication)
    */
-  create: async <T>(endpoint: string, data: any): Promise<T> => {
-    const authHeader = getAuthHeader();
-    if (!authHeader) {
-      throw new Error("Authentication required.");
-    }
-
-    const config: AxiosRequestConfig = {
-      headers: authHeader,
+  create: async (endpoint: string, data: any): Promise<any> => {
+    const config = {
+      headers: {
+        ...getAuthHeader(),
+        ...(data instanceof FormData
+          ? { "Content-Type": "multipart/form-data" }
+          : {}),
+      },
     };
 
-    const response = await axios.post<T>(
+    const response = await axios.post(
       `${API_BASE_URL}/${endpoint}`,
       data,
       config
@@ -49,17 +53,17 @@ export const api = {
   /**
    * Update an existing item (requires authentication)
    */
-  update: async <T>(endpoint: string, id: string, data: any): Promise<T> => {
-    const authHeader = getAuthHeader();
-    if (!authHeader) {
-      throw new Error("Authentication required.");
-    }
-
-    const config: AxiosRequestConfig = {
-      headers: authHeader,
+  update: async (endpoint: string, id: string, data: any): Promise<any> => {
+    const config = {
+      headers: {
+        ...getAuthHeader(),
+        ...(data instanceof FormData
+          ? { "Content-Type": "multipart/form-data" }
+          : {}),
+      },
     };
 
-    const response = await axios.put<T>(
+    const response = await axios.put(
       `${API_BASE_URL}/${endpoint}/${id}`,
       data,
       config
@@ -71,16 +75,9 @@ export const api = {
    * Delete an item (requires authentication)
    */
   delete: async (endpoint: string, id: string): Promise<void> => {
-    const authHeader = getAuthHeader();
-    if (!authHeader) {
-      throw new Error("Authentication required.");
-    }
-
-    const config: AxiosRequestConfig = {
-      headers: authHeader,
-    };
-
-    await axios.delete(`${API_BASE_URL}/${endpoint}/${id}`, config);
+    await axios.delete(`${API_BASE_URL}/${endpoint}/${id}`, {
+      headers: getAuthHeader(),
+    });
   },
 
   /**

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Model, Document } from "mongoose";
 
 export default class BaseController<T extends Document> {
-  constructor(private model: Model<T>) {}
+  constructor(protected model: Model<T>) {}
 
   // Get all items
   getAll = async (req: Request, res: Response) => {

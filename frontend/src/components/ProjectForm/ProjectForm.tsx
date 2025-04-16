@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import api from "@/utils/api";
 
@@ -9,7 +9,7 @@ type ProjectFormProps = {
     id?: string;
     title: string;
     description: string;
-    imageUrl: string;
+    images: { url: string; alt: string }[];
     technologies: string[];
     demoUrl: string | null;
     repoUrl: string | null;
@@ -22,7 +22,7 @@ type ProjectFormProps = {
 const defaultProject = {
   title: "",
   description: "",
-  imageUrl: "",
+  images: [],
   technologies: [],
   demoUrl: "",
   repoUrl: "",
@@ -35,10 +35,11 @@ export default function ProjectForm({
   mode,
 }: ProjectFormProps) {
   const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState({
     title: initialData.title || "",
     description: initialData.description || "",
-    imageUrl: initialData.imageUrl || "",
+    images: initialData.images || [],
     technologies: initialData.technologies || [],
     demoUrl: initialData.demoUrl || "",
     repoUrl: initialData.repoUrl || "",
@@ -54,6 +55,9 @@ export default function ProjectForm({
   const [isOngoing, setIsOngoing] = useState(
     !initialData.endDate || initialData.endDate === ""
   );
+  const [previewImages, setPreviewImages] = useState<
+    { url: string; alt: string }[]
+  >(initialData.images || []);
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
@@ -142,6 +146,23 @@ export default function ProjectForm({
     }
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    // Create preview URLs for selected images
+    const newPreviewImages = Array.from(files).map((file) => ({
+      url: URL.createObjectURL(file),
+      alt: formData.title || "Project image",
+    }));
+
+    setPreviewImages((prev) => [...prev, ...newPreviewImages]);
+  };
+
+  const removeImage = (index: number) => {
+    setPreviewImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -151,18 +172,36 @@ export default function ProjectForm({
     setSubmitError("");
 
     try {
-      if (mode === "create") {
-        await api.create("projects", formData);
-      } else {
-        await api.update("projects", initialData.id!, formData);
+      const formDataToSend = new FormData();
+
+      // Append all form fields except images
+      Object.entries(formData).forEach(([key, value]) => {
+        if (key === "images") return; // Skip images array
+
+        if (Array.isArray(value)) {
+          value.forEach((item) => formDataToSend.append(key, String(item)));
+        } else {
+          formDataToSend.append(key, String(value));
+        }
+      });
+
+      // Append images if there are any new ones
+      if (fileInputRef.current?.files) {
+        Array.from(fileInputRef.current.files).forEach((file) => {
+          formDataToSend.append("images", file);
+        });
       }
 
-      // Redirect back to projects list
+      if (mode === "create") {
+        await api.create("projects", formDataToSend);
+      } else {
+        await api.update("projects", initialData.id!, formDataToSend);
+      }
+
       router.push("/admin/projects");
     } catch (err) {
       console.error("Error saving project:", err);
 
-      // Check if it's an auth error
       if (
         err instanceof Error &&
         err.message.includes("Authentication required")
@@ -214,24 +253,6 @@ export default function ProjectForm({
         />
         {errors.description && (
           <div className="admin-form__error">{errors.description}</div>
-        )}
-      </div>
-
-      <div className="admin-form__field">
-        <label className="admin-form__label" htmlFor="imageUrl">
-          Image URL (optional)
-        </label>
-        <input
-          id="imageUrl"
-          name="imageUrl"
-          type="text"
-          className="admin-form__input"
-          value={formData.imageUrl}
-          onChange={handleChange}
-          disabled={isSubmitting}
-        />
-        {errors.imageUrl && (
-          <div className="admin-form__error">{errors.imageUrl}</div>
         )}
       </div>
 
@@ -291,60 +312,58 @@ export default function ProjectForm({
         )}
       </div>
 
-      <div className="admin-form__grid">
-        <div className="admin-form__field">
-          <label className="admin-form__label" htmlFor="startDate">
-            Start Date
-          </label>
+      <div className="admin-form__field">
+        <label className="admin-form__label" htmlFor="startDate">
+          Start Date
+        </label>
+        <input
+          id="startDate"
+          name="startDate"
+          type="date"
+          className="admin-form__input"
+          value={formData.startDate}
+          onChange={handleChange}
+          disabled={isSubmitting}
+        />
+        {errors.startDate && (
+          <div className="admin-form__error">{errors.startDate}</div>
+        )}
+      </div>
+
+      <div className="admin-form__field">
+        <label className="admin-form__label" htmlFor="endDate">
+          End Date
+        </label>
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
           <input
-            id="startDate"
-            name="startDate"
+            id="endDate"
+            name="endDate"
             type="date"
             className="admin-form__input"
-            value={formData.startDate}
+            value={formData.endDate}
             onChange={handleChange}
-            disabled={isSubmitting}
+            disabled={isSubmitting || isOngoing}
           />
-          {errors.startDate && (
-            <div className="admin-form__error">{errors.startDate}</div>
-          )}
-        </div>
-
-        <div className="admin-form__field">
-          <label className="admin-form__label" htmlFor="endDate">
-            End Date
-          </label>
-          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <label
+            style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+          >
             <input
-              id="endDate"
-              name="endDate"
-              type="date"
-              className="admin-form__input"
-              value={formData.endDate}
-              onChange={handleChange}
-              disabled={isSubmitting || isOngoing}
+              type="checkbox"
+              checked={isOngoing}
+              onChange={(e) => {
+                setIsOngoing(e.target.checked);
+                if (e.target.checked) {
+                  setFormData((prev) => ({ ...prev, endDate: "" }));
+                }
+              }}
+              disabled={isSubmitting}
             />
-            <label
-              style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
-            >
-              <input
-                type="checkbox"
-                checked={isOngoing}
-                onChange={(e) => {
-                  setIsOngoing(e.target.checked);
-                  if (e.target.checked) {
-                    setFormData((prev) => ({ ...prev, endDate: "" }));
-                  }
-                }}
-                disabled={isSubmitting}
-              />
-              Ongoing Project
-            </label>
-          </div>
-          {errors.endDate && (
-            <div className="admin-form__error">{errors.endDate}</div>
-          )}
+            Ongoing Project
+          </label>
         </div>
+        {errors.endDate && (
+          <div className="admin-form__error">{errors.endDate}</div>
+        )}
       </div>
 
       <div className="admin-form__field">
@@ -375,6 +394,36 @@ export default function ProjectForm({
           onChange={handleChange}
           disabled={isSubmitting}
         />
+      </div>
+
+      <div className="admin-form__field">
+        <label className="admin-form__label">Project Images</label>
+        <div className="admin-form__image-upload">
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleImageChange}
+            accept="image/*"
+            multiple
+            className="admin-form__file-input"
+            disabled={isSubmitting}
+          />
+          <div className="admin-form__image-preview">
+            {previewImages.map((image, index) => (
+              <div key={index} className="admin-form__image-preview-item">
+                <img src={image.url} alt={image.alt} />
+                <button
+                  type="button"
+                  onClick={() => removeImage(index)}
+                  className="admin-form__image-remove"
+                  disabled={isSubmitting}
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {submitError && (

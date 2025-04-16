@@ -8,7 +8,7 @@ type Project = {
   id: string;
   title: string;
   description: string;
-  imageUrl: string;
+  images: { url: string }[];
   technologies: string[];
   demoUrl: string | null;
   repoUrl: string | null;
@@ -59,7 +59,7 @@ export default function Projects() {
           style={{ "--animation-order": index } as React.CSSProperties}
         >
           <div className={styles.projectImage}>
-            <img src={project.imageUrl} alt={project.title} />
+            <img src={project.images?.[0]?.url} alt={project.title} />
           </div>
           <div className={styles.projectContent}>
             <h3 className={styles.projectTitle}>{project.title}</h3>
