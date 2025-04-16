@@ -13,6 +13,8 @@ type ProjectFormProps = {
     technologies: string[];
     demoUrl: string | null;
     repoUrl: string | null;
+    startDate: string;
+    endDate: string | null;
   };
   mode: "create" | "edit";
 };
@@ -24,6 +26,8 @@ const defaultProject = {
   technologies: [],
   demoUrl: "",
   repoUrl: "",
+  startDate: "",
+  endDate: "",
 };
 
 export default function ProjectForm({
@@ -38,11 +42,18 @@ export default function ProjectForm({
     technologies: initialData.technologies || [],
     demoUrl: initialData.demoUrl || "",
     repoUrl: initialData.repoUrl || "",
+    startDate: initialData.startDate
+      ? initialData.startDate.substring(0, 10)
+      : "",
+    endDate: initialData.endDate ? initialData.endDate.substring(0, 10) : "",
   });
   const [newTech, setNewTech] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [isOngoing, setIsOngoing] = useState(
+    !initialData.endDate || initialData.endDate === ""
+  );
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
@@ -55,8 +66,20 @@ export default function ProjectForm({
       newErrors.description = "Description is required";
     }
 
-    if (!formData.imageUrl.trim()) {
-      newErrors.imageUrl = "Image URL is required";
+    if (!formData.startDate) {
+      newErrors.startDate = "Start date is required";
+    }
+
+    if (!isOngoing && !formData.endDate) {
+      newErrors.endDate = "End date is required if not ongoing";
+    }
+
+    if (
+      formData.endDate &&
+      formData.startDate &&
+      new Date(formData.endDate) < new Date(formData.startDate)
+    ) {
+      newErrors.endDate = "End date cannot be before start date";
     }
 
     if (formData.technologies.length === 0) {
@@ -196,7 +219,7 @@ export default function ProjectForm({
 
       <div className="admin-form__field">
         <label className="admin-form__label" htmlFor="imageUrl">
-          Image URL
+          Image URL (optional)
         </label>
         <input
           id="imageUrl"
@@ -266,6 +289,62 @@ export default function ProjectForm({
         {errors.technologies && (
           <div className="admin-form__error">{errors.technologies}</div>
         )}
+      </div>
+
+      <div className="admin-form__grid">
+        <div className="admin-form__field">
+          <label className="admin-form__label" htmlFor="startDate">
+            Start Date
+          </label>
+          <input
+            id="startDate"
+            name="startDate"
+            type="date"
+            className="admin-form__input"
+            value={formData.startDate}
+            onChange={handleChange}
+            disabled={isSubmitting}
+          />
+          {errors.startDate && (
+            <div className="admin-form__error">{errors.startDate}</div>
+          )}
+        </div>
+
+        <div className="admin-form__field">
+          <label className="admin-form__label" htmlFor="endDate">
+            End Date
+          </label>
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+            <input
+              id="endDate"
+              name="endDate"
+              type="date"
+              className="admin-form__input"
+              value={formData.endDate}
+              onChange={handleChange}
+              disabled={isSubmitting || isOngoing}
+            />
+            <label
+              style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+            >
+              <input
+                type="checkbox"
+                checked={isOngoing}
+                onChange={(e) => {
+                  setIsOngoing(e.target.checked);
+                  if (e.target.checked) {
+                    setFormData((prev) => ({ ...prev, endDate: "" }));
+                  }
+                }}
+                disabled={isSubmitting}
+              />
+              Ongoing Project
+            </label>
+          </div>
+          {errors.endDate && (
+            <div className="admin-form__error">{errors.endDate}</div>
+          )}
+        </div>
       </div>
 
       <div className="admin-form__field">
