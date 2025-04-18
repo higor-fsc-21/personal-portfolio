@@ -2,6 +2,20 @@ import axios, { AxiosRequestConfig } from "axios";
 
 const API_BASE_URL = "http://localhost:3001/api";
 
+// Transform MongoDB _id to id
+const transformMongoResponse = (data: any): any => {
+  if (Array.isArray(data)) {
+    return data.map((item) => transformMongoResponse(item));
+  }
+
+  if (data && typeof data === "object") {
+    const { _id, ...rest } = data;
+    return _id ? { id: _id, ...rest } : rest;
+  }
+
+  return data;
+};
+
 export const getAuthHeader = (): { Authorization: string } | undefined => {
   const token = localStorage.getItem("admin-token");
   if (!token) return undefined;
@@ -16,7 +30,7 @@ export const api = {
     const response = await axios.get<T[]>(`${API_BASE_URL}/${endpoint}`, {
       headers: getAuthHeader(),
     });
-    return response.data;
+    return transformMongoResponse(response.data);
   },
 
   /**
@@ -26,7 +40,7 @@ export const api = {
     const response = await axios.get<T>(`${API_BASE_URL}/${endpoint}/${id}`, {
       headers: getAuthHeader(),
     });
-    return response.data;
+    return transformMongoResponse(response.data);
   },
 
   /**
@@ -47,7 +61,7 @@ export const api = {
       data,
       config
     );
-    return response.data;
+    return transformMongoResponse(response.data);
   },
 
   /**
@@ -68,7 +82,7 @@ export const api = {
       data,
       config
     );
-    return response.data;
+    return transformMongoResponse(response.data);
   },
 
   /**
@@ -91,7 +105,7 @@ export const api = {
       email,
       password,
     });
-    return response.data;
+    return transformMongoResponse(response.data);
   },
 };
 

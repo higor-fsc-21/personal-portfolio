@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 
 // 1. Environment setup
 dotenv.config();
-console.log(process.env);
 
 // 2. Database setup
 import connectDB from "./config/database";

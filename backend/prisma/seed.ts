@@ -16,38 +16,57 @@ async function main() {
     // Seed Skills
     const skills = [
       // Frontend
-      { name: "React", category: "Frontend", level: 5 },
-      { name: "React Native", category: "Frontend", level: 5 },
-      { name: "Next.js", category: "Frontend", level: 5 },
-      { name: "TypeScript", category: "Frontend", level: 5 },
-      { name: "JavaScript", category: "Frontend", level: 5 },
-      { name: "Redux", category: "Frontend", level: 4 },
-      { name: "Zustand", category: "Frontend", level: 4 },
-      { name: "Context API", category: "Frontend", level: 4 },
+      { name: "React", category: "Frontend" },
+      { name: "React Native", category: "Frontend" },
+      { name: "Next.js", category: "Frontend" },
+      { name: "TypeScript", category: "Frontend" },
+      { name: "JavaScript", category: "Frontend" },
+      { name: "Redux", category: "Frontend" },
+      { name: "Zustand", category: "Frontend" },
+      { name: "Context API", category: "Frontend" },
+
+      // Backend
+      { name: "Node.js", category: "Backend" },
+      { name: "Express", category: "Backend" },
+      { name: "MongoDB", category: "Backend" },
+      { name: "PostgreSQL", category: "Backend" },
+      { name: "REST API", category: "Backend" },
+      { name: "GraphQL", category: "Backend" },
+
       // Testing
-      { name: "Jest", category: "Testing", level: 4 },
-      { name: "Testing Library", category: "Testing", level: 4 },
+      { name: "Jest", category: "Testing" },
+      { name: "Testing Library", category: "Testing" },
+      { name: "Cypress", category: "Testing" },
+
       // Styling
-      { name: "Styled-Components", category: "Styling", level: 5 },
-      { name: "Sass", category: "Styling", level: 4 },
-      // Tools
-      { name: "Git", category: "Tools", level: 4 },
-      { name: "Webpack", category: "Tools", level: 3 },
-      { name: "Babel", category: "Tools", level: 3 },
-      { name: "Docker", category: "Tools", level: 3 },
+      { name: "Styled-Components", category: "Styling" },
+      { name: "Sass", category: "Styling" },
+      { name: "Tailwind CSS", category: "Styling" },
+      { name: "CSS Modules", category: "Styling" },
+
+      // DevOps & Tools
+      { name: "Git", category: "DevOps & Tools" },
+      { name: "Docker", category: "DevOps & Tools" },
+      { name: "CI/CD", category: "DevOps & Tools" },
+      { name: "Webpack", category: "DevOps & Tools" },
+      { name: "Babel", category: "DevOps & Tools" },
+
+      // Architecture & Patterns
+      { name: "Micro-Frontend", category: "Architecture & Patterns" },
+      { name: "Clean Code", category: "Architecture & Patterns" },
+      { name: "Design Patterns", category: "Architecture & Patterns" },
+      { name: "SOLID Principles", category: "Architecture & Patterns" },
+
+      // Best Practices
+      { name: "Responsive Design", category: "Best Practices" },
+      { name: "Accessibility (a11y)", category: "Best Practices" },
+      { name: "SEO", category: "Best Practices" },
+      { name: "Performance Optimization", category: "Best Practices" },
+
       // Methodologies
-      { name: "Agile", category: "Methodologies", level: 4 },
-      { name: "Scrum", category: "Methodologies", level: 4 },
-      { name: "Kanban", category: "Methodologies", level: 4 },
-      { name: "CI/CD", category: "Methodologies", level: 4 },
-      // Other
-      { name: "REST API", category: "Other", level: 4 },
-      { name: "GraphQL", category: "Other", level: 4 },
-      { name: "Micro-Frontend", category: "Other", level: 4 },
-      { name: "UI/UX Design", category: "Other", level: 4 },
-      { name: "Responsive Design", category: "Other", level: 5 },
-      { name: "Accessibility (a11y)", category: "Other", level: 4 },
-      { name: "SEO", category: "Other", level: 3 },
+      { name: "Agile", category: "Methodologies" },
+      { name: "Scrum", category: "Methodologies" },
+      { name: "Kanban", category: "Methodologies" },
     ];
 
     for (const skill of skills) {
@@ -195,12 +214,7 @@ async function main() {
         startDate: new Date("2024-08-01"),
         endDate: null,
         technologies: ["React", "React Query", "SCSS", "Micro-Frontend"],
-        images: [
-          {
-            url: "https://via.placeholder.com/800x600?text=Porto+Seguro+Claims",
-            alt: "Porto Seguro Claims Tracking System",
-          },
-        ],
+        images: [],
         githubUrl: "https://github.com/higor21/portfolio",
       },
       {
@@ -210,12 +224,7 @@ async function main() {
         startDate: new Date("2023-11-01"),
         endDate: new Date("2024-07-31"),
         technologies: ["React Native", "Expo", "Zustand", "CI/CD"],
-        images: [
-          {
-            url: "https://via.placeholder.com/800x600?text=Safra+Link+Banking",
-            alt: "Safra Link Banking App",
-          },
-        ],
+        images: [],
         githubUrl: "https://github.com/higor21/portfolio",
       },
       {
@@ -230,12 +239,7 @@ async function main() {
           "Accessibility",
           "Code Splitting",
         ],
-        images: [
-          {
-            url: "https://via.placeholder.com/800x600?text=Caixa+CNP+Portal",
-            alt: "Caixa/CNP Portal",
-          },
-        ],
+        images: [],
         githubUrl: "https://github.com/higor21/portfolio",
       },
       {
@@ -245,12 +249,7 @@ async function main() {
         startDate: new Date("2020-05-01"),
         endDate: new Date("2021-07-31"),
         technologies: ["React", "TypeScript", "WebRTC", "Chart.js"],
-        images: [
-          {
-            url: "https://via.placeholder.com/800x600?text=Saúde+Melhor",
-            alt: "Saúde Melhor Telemedicine Platform",
-          },
-        ],
+        images: [],
         githubUrl: "https://github.com/higor21/portfolio",
       },
       {
@@ -265,12 +264,7 @@ async function main() {
           "Testing Library",
           "Clean Architecture",
         ],
-        images: [
-          {
-            url: "https://via.placeholder.com/800x600?text=Creditas+Payment",
-            alt: "Creditas Payment Flow",
-          },
-        ],
+        images: [],
         githubUrl: "https://github.com/higor21/portfolio",
       },
       {
@@ -280,12 +274,7 @@ async function main() {
         startDate: new Date("2022-05-01"),
         endDate: new Date("2023-02-28"),
         technologies: ["React Native", "Firebase", "Real-time Chat", "Scrum"],
-        images: [
-          {
-            url: "https://via.placeholder.com/800x600?text=GoGame+Platform",
-            alt: "GoGame Gaming Platform",
-          },
-        ],
+        images: [],
         githubUrl: "https://github.com/higor21/portfolio",
       },
     ];

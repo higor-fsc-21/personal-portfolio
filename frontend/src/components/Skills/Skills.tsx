@@ -8,7 +8,6 @@ type Skill = {
   id: string;
   name: string;
   category: string;
-  level: number;
 };
 
 export default function Skills() {
@@ -31,7 +30,7 @@ export default function Skills() {
         const uniqueCategories = Array.from(
           new Set(fetchedSkills.map((skill: Skill) => skill.category))
         ) as string[];
-        setCategories(uniqueCategories);
+        setCategories(uniqueCategories.reverse());
 
         setError(null);
       } catch (err) {
@@ -88,25 +87,12 @@ export default function Skills() {
               .map((skill, index) => (
                 <div
                   key={skill.id}
-                  className={styles.skillItem}
+                  className={`${styles.skillItem} ${
+                    animateSkills ? styles.animate : ""
+                  }`}
                   style={{ "--animation-order": index } as React.CSSProperties}
                 >
-                  <div className={styles.skillHeader}>
-                    <span className={styles.skillName}>{skill.name}</span>
-                    <span className={styles.skillLevel}>{skill.level}/5</span>
-                  </div>
-                  <div className={styles.skillBar}>
-                    <div
-                      className={`${styles.skillProgress} ${
-                        animateSkills ? styles.animated : ""
-                      }`}
-                      style={
-                        {
-                          "--skill-level": `${(skill.level / 5) * 100}%`,
-                        } as React.CSSProperties
-                      }
-                    ></div>
-                  </div>
+                  <span className={styles.skillName}>{skill.name}</span>
                 </div>
               ))}
           </div>

@@ -2,18 +2,20 @@
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import axios from "axios";
 import AdminDashboard from "@/components/AdminDashboard/AdminDashboard";
 import ProjectForm from "@/components/ProjectForm/ProjectForm";
+import api from "@/utils/api";
 
 type Project = {
   id: string;
   title: string;
   description: string;
-  imageUrl: string;
+  images: { url: string; alt: string }[];
   technologies: string[];
   demoUrl: string | null;
   repoUrl: string | null;
+  startDate: string;
+  endDate: string | null;
 };
 
 export default function EditProjectPage() {
@@ -30,10 +32,8 @@ export default function EditProjectPage() {
 
       try {
         setLoading(true);
-        const response = await axios.get(
-          `http://localhost:3001/api/projects/${projectId}`
-        );
-        setProject(response.data);
+        const data = await api.getById<Project>("projects", projectId);
+        setProject(data);
         setError("");
       } catch (err) {
         console.error("Error fetching project:", err);

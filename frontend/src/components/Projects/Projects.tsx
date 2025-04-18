@@ -3,7 +3,9 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./Projects.module.scss";
+import unauthorizedImage from "../../assets/images/unauthorized_monitor.png";
 
 type Project = {
   _id: string;
@@ -51,6 +53,20 @@ export default function Projects() {
     return <div className={styles.empty}>No projects available.</div>;
   }
 
+  const renderProjectImage = (project: Project) => {
+    if (project.images?.length > 0)
+      return <img src={project.images[0]?.url} alt={project.title} />;
+
+    return (
+      <Image
+        fill
+        alt="Unauthorized"
+        src={unauthorizedImage.src}
+        style={{ objectFit: "contain" }}
+      />
+    );
+  };
+
   return (
     <div className={styles.projectsContainer} ref={projectsRef}>
       {projects.map((project, index) => (
@@ -70,7 +86,18 @@ export default function Projects() {
             }}
           >
             <div className={styles.projectImage}>
-              <img src={project.images?.[0]?.url} alt={project.title} />
+              {/* <Image
+                src={
+                  project.images?.length > 0
+                    ? project.images[0].url
+                    : unauthorizedImage.src
+                }
+                fill
+                alt={project.title}
+                style={{ objectFit: "cover" }}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              /> */}
+              {renderProjectImage(project)}
             </div>
             <div className={styles.projectContent}>
               <h3 className={styles.projectTitle}>{project.title}</h3>
