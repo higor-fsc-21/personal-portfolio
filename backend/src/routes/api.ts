@@ -7,6 +7,7 @@ import SkillController from "../controllers/SkillController";
 import CertificateController from "../controllers/CertificateController";
 import { authenticateToken } from "../middlewares/auth";
 import { upload } from "../services/FileUploadService";
+import { sendContactEmail } from "../controllers/contact.controller";
 
 const router = Router();
 
@@ -14,6 +15,8 @@ const router = Router();
 router.post("/auth", AuthController.login);
 
 // Public routes (no authentication required)
+router.post("/contact", sendContactEmail);
+
 router.get("/projects", ProjectController.getAll);
 router.get("/projects/:id", ProjectController.getById);
 

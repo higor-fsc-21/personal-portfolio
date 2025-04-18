@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import axios from "axios";
 import styles from "./Contact.module.scss";
 
 type FormState = {
@@ -36,31 +37,28 @@ export default function Contact() {
     setFormError(null);
 
     try {
-      // In a real application, this would be an API call to your backend
-      // For demo purposes, we'll just simulate a successful submission
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Send email through mailto link as a fallback for demo purposes
-      const mailtoLink = `mailto:felype.cet.15@gmail.com?subject=${encodeURIComponent(
-        formState.subject
-      )}&body=${encodeURIComponent(
-        `Name: ${formState.name}\nEmail: ${formState.email}\n\n${formState.message}`
-      )}`;
-
-      window.open(mailtoLink, "_blank");
-
-      setFormSuccess(
-        "Your message has been sent! Thank you for contacting me."
+      const response = await axios.post(
+        "http://localhost:3001/api/contact",
+        formState
       );
-      setFormState({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-      });
-    } catch (error) {
+
+      if (response.status === 200) {
+        setFormSuccess(
+          "Your message has been sent! Thank you for contacting me."
+        );
+        setFormState({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        throw new Error("Failed to send message");
+      }
+    } catch (error: any) {
       setFormError(
-        "There was an error sending your message. Please try again later."
+        error.response?.data?.error ||
+          "There was an error sending your message. Please try again later."
       );
       console.error("Error sending message:", error);
     } finally {
