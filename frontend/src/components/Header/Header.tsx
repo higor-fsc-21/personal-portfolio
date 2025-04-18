@@ -27,6 +27,34 @@ export default function Header() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    sectionId: string
+  ) => {
+    e.preventDefault();
+    setIsMenuOpen(false);
+
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const headerOffset = 80; // Adjust this value based on your header height
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition =
+        elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
+
   return (
     <header className={`${styles.header} ${isScrolled ? styles.scrolled : ""}`}>
       <div className={styles.container}>
@@ -49,32 +77,44 @@ export default function Header() {
         <nav className={`${styles.nav} ${isMenuOpen ? styles.open : ""}`}>
           <ul className={styles.navList}>
             <li className={styles.navItem}>
-              <a href="#about" onClick={() => setIsMenuOpen(false)}>
+              <a href="#about" onClick={(e) => handleNavClick(e, "about")}>
                 About
               </a>
             </li>
             <li className={styles.navItem}>
-              <a href="#skills" onClick={() => setIsMenuOpen(false)}>
+              <a href="#skills" onClick={(e) => handleNavClick(e, "skills")}>
                 Skills
               </a>
             </li>
             <li className={styles.navItem}>
-              <a href="#experience" onClick={() => setIsMenuOpen(false)}>
+              <a
+                href="#experience"
+                onClick={(e) => handleNavClick(e, "experience")}
+              >
                 Experience
               </a>
             </li>
             <li className={styles.navItem}>
-              <a href="#projects" onClick={() => setIsMenuOpen(false)}>
+              <a
+                href="#projects"
+                onClick={(e) => handleNavClick(e, "projects")}
+              >
                 Projects
               </a>
             </li>
             <li className={styles.navItem}>
-              <a href="#education" onClick={() => setIsMenuOpen(false)}>
+              <a
+                href="#education"
+                onClick={(e) => handleNavClick(e, "education")}
+              >
                 Education
               </a>
             </li>
             <li className={styles.navItem}>
-              <a href="#certificates" onClick={() => setIsMenuOpen(false)}>
+              <a
+                href="#certificates"
+                onClick={(e) => handleNavClick(e, "certificates")}
+              >
                 Certificates
               </a>
             </li>
@@ -82,7 +122,7 @@ export default function Header() {
               <a
                 href="#contact"
                 className={styles.contactButton}
-                onClick={() => setIsMenuOpen(false)}
+                onClick={(e) => handleNavClick(e, "contact")}
               >
                 Contact Me
               </a>

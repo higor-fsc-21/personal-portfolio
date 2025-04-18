@@ -86,17 +86,6 @@ export default function Projects() {
             }}
           >
             <div className={styles.projectImage}>
-              {/* <Image
-                src={
-                  project.images?.length > 0
-                    ? project.images[0].url
-                    : unauthorizedImage.src
-                }
-                fill
-                alt={project.title}
-                style={{ objectFit: "cover" }}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              /> */}
               {renderProjectImage(project)}
             </div>
             <div className={styles.projectContent}>

@@ -1,4 +1,3 @@
-import Header from "@/components/Header/Header";
 import ScrollToTop from "@/components/ScrollToTop/ScrollToTop";
 
 export default function PublicLayout({
@@ -8,7 +7,6 @@ export default function PublicLayout({
 }) {
   return (
     <>
-      <Header />
       {children}
       <ScrollToTop />
     </>

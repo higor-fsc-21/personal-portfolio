@@ -6,6 +6,7 @@ import Skills from "@/components/Skills/Skills";
 import Education from "@/components/Education/Education";
 import Certificates from "@/components/Certificates/Certificates";
 import Contact from "@/components/Contact/Contact";
+import Header from "@/components/Header/Header";
 
 export const metadata: Metadata = {
   title: "Higor Felype - Frontend Developer",
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <main className={styles.main}>
+      <Header />
       <section className={styles.hero}>
         <div className="container">
           <h1>Higor Felype S. Carvalho</h1>
