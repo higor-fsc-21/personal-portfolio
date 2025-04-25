@@ -7,6 +7,11 @@ const nextConfig = {
   images: {
     domains: ["localhost"],
   },
+  output: "standalone",
+  distDir: ".next",
+  experimental: {
+    serverActions: true,
+  },
 };
 
 module.exports = nextConfig;
