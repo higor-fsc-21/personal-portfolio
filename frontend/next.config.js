@@ -12,6 +12,10 @@ const nextConfig = {
   experimental: {
     serverActions: true,
   },
+  poweredByHeader: false,
+  generateBuildId: async () => {
+    return "build";
+  },
 };
 
 module.exports = nextConfig;
