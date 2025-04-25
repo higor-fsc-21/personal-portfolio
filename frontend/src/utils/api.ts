@@ -1,6 +1,6 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
 
-const API_BASE_URL = "http://localhost:3001/api";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // Transform MongoDB _id to id
 const transformMongoResponse = (data: any): any => {
@@ -110,3 +110,5 @@ export const api = {
 };
 
 export default api;
+
+export { API_BASE_URL };

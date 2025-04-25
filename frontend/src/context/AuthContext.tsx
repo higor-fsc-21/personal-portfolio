@@ -8,6 +8,7 @@ import {
   ReactNode,
 } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "@/utils/api";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -35,7 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       console.log("Attempting login with password:", password);
 
-      const response = await axios.post("http://localhost:3001/api/auth", {
+      const response = await axios.post(`${API_BASE_URL}/auth`, {
         password,
       });
 

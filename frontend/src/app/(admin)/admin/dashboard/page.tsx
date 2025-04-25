@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import AdminDashboard from "@/components/AdminDashboard/AdminDashboard";
 import Link from "next/link";
+import { API_BASE_URL } from "@/utils/api";
 
 type DashboardStats = {
   projects: number;
@@ -37,11 +38,11 @@ export default function DashboardPage() {
           educationRes,
           certificatesRes,
         ] = await Promise.all([
-          axios.get("http://localhost:3001/api/projects"),
-          axios.get("http://localhost:3001/api/skills"),
-          axios.get("http://localhost:3001/api/experiences"),
-          axios.get("http://localhost:3001/api/education"),
-          axios.get("http://localhost:3001/api/certificates"),
+          axios.get(`${API_BASE_URL}/projects`),
+          axios.get(`${API_BASE_URL}/skills`),
+          axios.get(`${API_BASE_URL}/experiences`),
+          axios.get(`${API_BASE_URL}/education`),
+          axios.get(`${API_BASE_URL}/certificates`),
         ]);
 
         setStats({

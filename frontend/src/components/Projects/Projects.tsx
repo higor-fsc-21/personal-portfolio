@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./Projects.module.scss";
 import unauthorizedImage from "../../assets/images/unauthorized_monitor.png";
+import { API_BASE_URL } from "@/utils/api";
 
 type Project = {
   _id: string;
@@ -27,7 +28,7 @@ export default function Projects() {
     const fetchProjects = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("http://localhost:3001/api/projects");
+        const response = await axios.get(`${API_BASE_URL}/projects`);
         setProjects(response.data);
         setError(null);
       } catch (err) {

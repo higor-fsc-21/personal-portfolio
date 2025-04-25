@@ -3,6 +3,7 @@
 import { useState } from "react";
 import axios from "axios";
 import styles from "./Contact.module.scss";
+import { API_BASE_URL } from "@/utils/api";
 
 type FormState = {
   name: string;
@@ -37,10 +38,7 @@ export default function Contact() {
     setFormError(null);
 
     try {
-      const response = await axios.post(
-        "http://localhost:3001/api/contact",
-        formState
-      );
+      const response = await axios.post(`${API_BASE_URL}/contact`, formState);
 
       if (response.status === 200) {
         setFormSuccess(

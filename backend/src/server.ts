@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import serverless from "serverless-http";
 
 // 1. Environment setup
 dotenv.config();
@@ -11,10 +12,12 @@ connectDB();
 
 // 3. Express app setup
 const app = express();
-const port = process.env.PORT || 3001;
 
 // 4. Middleware setup
-app.use(cors());
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN || "*",
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // 5. Routes setup (after env is loaded)
@@ -23,10 +26,8 @@ app.use("/api", apiRoutes);
 
 // 6. Basic routes
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to the Portfolio API" });
+  res.json({ message: "Welcome to the Portfolio API (Lambda)" });
 });
 
-// 7. Server startup
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+// 7. Export the handler for Lambda instead of listening
+export const handler = serverless(app);
