@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import serverless from "serverless-http";
+import { errorHandler } from "./middlewares/errorHandler";
 
 // 1. Environment setup
 dotenv.config();
@@ -28,6 +29,8 @@ app.use("/api", apiRoutes);
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the Portfolio API (Lambda)" });
 });
+
+app.use(errorHandler);
 
 // 7. Export the handler for Lambda instead of listening
 export const handler = serverless(app);
