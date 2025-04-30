@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import styles from "./ProjectDetails.module.scss";
+import api from "@/utils/api";
 
 type Project = {
   _id: string;
@@ -27,10 +28,8 @@ export default function ProjectDetails() {
     const fetchProject = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(
-          `http://localhost:3001/api/projects/${id}`
-        );
-        setProject(response.data);
+        const response = await api.getById<Project>("projects", id as string);
+        setProject(response);
         setError(null);
       } catch (err) {
         console.error("Error fetching project:", err);

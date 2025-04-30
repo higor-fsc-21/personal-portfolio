@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import styles from "./Experience.module.scss";
+import api from "@/utils/api";
 
 type Experience = {
   id: string;
@@ -24,10 +24,8 @@ export default function Experience() {
     const fetchExperiences = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(
-          "http://localhost:3001/api/experiences"
-        );
-        setExperiences(response.data);
+        const response = await api.getAll<Experience>("experiences");
+        setExperiences(response);
         setError(null);
       } catch (err) {
         console.error("Error fetching experiences:", err);

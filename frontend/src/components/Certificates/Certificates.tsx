@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import axios from "axios";
 import styles from "./Certificates.module.scss";
+import api from "@/utils/api";
 
 type Certificate = {
   id: string;
@@ -22,10 +22,8 @@ export default function Certificates() {
     const fetchCertificates = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(
-          "http://localhost:3001/api/certificates"
-        );
-        setCertificates(response.data);
+        const response = await api.getAll<Certificate>("certificates");
+        setCertificates(response);
         setError(null);
       } catch (err) {
         console.error("Error fetching certificates:", err);

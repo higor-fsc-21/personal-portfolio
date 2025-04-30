@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import axios from "axios";
 import styles from "./Education.module.scss";
+import api from "@/utils/api";
 
 type Education = {
   id: string;
@@ -23,8 +23,8 @@ export default function Education() {
     const fetchEducation = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("http://localhost:3001/api/education");
-        setEducations(response.data);
+        const response = await api.getAll<Education>("education");
+        setEducations(response);
         setError(null);
       } catch (err) {
         console.error("Error fetching education:", err);

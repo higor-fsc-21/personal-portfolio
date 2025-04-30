@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import axios from "axios";
 import AdminDashboard from "@/components/AdminDashboard/AdminDashboard";
 import SkillForm from "@/components/SkillForm/SkillForm";
+import api from "@/utils/api";
 
 type Skill = {
   id: string;
@@ -27,10 +27,8 @@ export default function EditSkillPage() {
 
       try {
         setLoading(true);
-        const response = await axios.get(
-          `http://localhost:3001/api/skills/${skillId}`
-        );
-        setSkill(response.data);
+        const response = await api.getById<Skill>("skills", skillId);
+        setSkill(response);
         setError("");
       } catch (err) {
         console.error("Error fetching skill:", err);

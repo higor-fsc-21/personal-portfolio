@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import styles from "./Skills.module.scss";
+import api from "@/utils/api";
 
 type Skill = {
   id: string;
@@ -22,13 +22,12 @@ export default function Skills() {
     const fetchSkills = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("http://localhost:3001/api/skills");
-        const fetchedSkills = response.data as Skill[];
-        setSkills(fetchedSkills);
+        const response = await api.getAll<Skill>("skills");
+        setSkills(response);
 
         // Extract unique categories
         const uniqueCategories = Array.from(
-          new Set(fetchedSkills.map((skill: Skill) => skill.category))
+          new Set(response.map((skill: Skill) => skill.category))
         ) as string[];
         setCategories(uniqueCategories.reverse());
 
