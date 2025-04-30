@@ -15,9 +15,31 @@ connectDB();
 const app = express();
 
 // 4. Middleware setup
+const allowedOrigins = [process.env.CORS_ORIGIN].filter(Boolean);
+
+// Debug middleware to log requests
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  console.log("Origin:", req.headers.origin);
+  console.log("Headers:", req.headers);
+  next();
+});
+
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN || "*",
+  origin: function (origin: any, callback: any) {
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log("Blocked origin:", origin);
+      console.log("Allowed origins:", allowedOrigins);
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
+
 app.use(cors(corsOptions));
 app.use(express.json());
 
@@ -28,6 +50,15 @@ app.use("/api", apiRoutes);
 // 6. Basic routes
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the Portfolio API (Lambda)" });
+});
+
+// Add an endpoint to check CORS configuration
+app.get("/cors-test", (req, res) => {
+  res.json({
+    message: "CORS is working",
+    origin: req.headers.origin,
+    allowedOrigins,
+  });
 });
 
 app.use(errorHandler);
