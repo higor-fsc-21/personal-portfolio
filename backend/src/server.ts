@@ -23,13 +23,23 @@ app.use((req, res, next) => {
 });
 
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+  origin:
+    process.env.CORS_ORIGIN || "https://personal-portfolio-tk1m.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true,
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "Origin",
+    "Accept",
+    "X-Requested-With",
+  ],
 };
 
 // Handle preflight requests
-// app.options("*", cors(corsOptions));
+app.options("*", cors(corsOptions));
 
-// app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // 5. Routes setup (after env is loaded)
