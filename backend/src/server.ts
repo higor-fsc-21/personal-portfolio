@@ -29,7 +29,7 @@ const corsOptions = {
 // Handle preflight requests
 // app.options("*", cors(corsOptions));
 
-app.use(cors());
+// app.use(cors());
 app.use(express.json());
 
 // 5. Routes setup (after env is loaded)
@@ -38,7 +38,7 @@ app.use("/api", apiRoutes);
 
 // 6. Basic routes
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to the Portfolio API" });
+  res.json({ message: "Welcome to the Portfolio API - v2" });
 });
 
 app.use(errorHandler);
