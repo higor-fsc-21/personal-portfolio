@@ -27,9 +27,9 @@ const corsOptions = {
 };
 
 // Handle preflight requests
-app.options("*", cors(corsOptions));
+// app.options("*", cors(corsOptions));
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 
 // 5. Routes setup (after env is loaded)
