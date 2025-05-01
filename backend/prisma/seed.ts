@@ -215,7 +215,8 @@ async function main() {
         endDate: null,
         technologies: ["React", "React Query", "SCSS", "Micro-Frontend"],
         images: [],
-        githubUrl: "https://github.com/higor21/portfolio",
+        repoUrl: "https://github.com/higor21/portfolio",
+        demoUrl: "https://porto-seguro-claims-tracking-system.vercel.app/",
       },
       {
         title: "Safra Link Banking App",
@@ -225,7 +226,7 @@ async function main() {
         endDate: new Date("2024-07-31"),
         technologies: ["React Native", "Expo", "Zustand", "CI/CD"],
         images: [],
-        githubUrl: "https://github.com/higor21/portfolio",
+        repoUrl: "https://github.com/higor21/portfolio",
       },
       {
         title: "Caixa/CNP Portal",
@@ -240,7 +241,7 @@ async function main() {
           "Code Splitting",
         ],
         images: [],
-        githubUrl: "https://github.com/higor21/portfolio",
+        repoUrl: "https://github.com/higor21/portfolio",
       },
       {
         title: "Saúde Melhor Telemedicine Platform",
@@ -250,7 +251,7 @@ async function main() {
         endDate: new Date("2021-07-31"),
         technologies: ["React", "TypeScript", "WebRTC", "Chart.js"],
         images: [],
-        githubUrl: "https://github.com/higor21/portfolio",
+        repoUrl: "https://github.com/higor21/portfolio",
       },
       {
         title: "Creditas Payment Flow",
@@ -265,7 +266,7 @@ async function main() {
           "Clean Architecture",
         ],
         images: [],
-        githubUrl: "https://github.com/higor21/portfolio",
+        repoUrl: "https://github.com/higor21/portfolio",
       },
       {
         title: "GoGame Gaming Platform",
@@ -275,7 +276,7 @@ async function main() {
         endDate: new Date("2023-02-28"),
         technologies: ["React Native", "Firebase", "Real-time Chat", "Scrum"],
         images: [],
-        githubUrl: "https://github.com/higor21/portfolio",
+        repoUrl: "https://github.com/higor21/portfolio",
       },
     ];
 

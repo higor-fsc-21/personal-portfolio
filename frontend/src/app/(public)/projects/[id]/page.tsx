@@ -12,7 +12,8 @@ type Project = {
   description: string;
   images: { url: string; alt: string }[];
   technologies: string[];
-  githubUrl?: string;
+  demoUrl?: string;
+  repoUrl?: string;
   startDate: string;
   endDate: string | null;
 };
@@ -103,10 +104,10 @@ export default function ProjectDetails() {
             </p>
           </div>
 
-          {project.githubUrl && (
+          {project.repoUrl && (
             <div className={styles.links}>
               <a
-                href={project.githubUrl}
+                href={project.repoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.githubLink}

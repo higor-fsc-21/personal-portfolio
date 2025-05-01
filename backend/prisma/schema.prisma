@@ -28,8 +28,8 @@ model Project {
   endDate     DateTime?
   technologies String[]
   images      Json[]   // Array of objects with url and alt properties
-  githubUrl   String?
-  liveUrl     String?
+  repoUrl     String?
+  demoUrl     String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   @@map("projects")
