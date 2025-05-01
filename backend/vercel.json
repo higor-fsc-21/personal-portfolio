@@ -9,11 +9,17 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "src/server.ts"
+      "dest": "src/server.ts",
+      "headers": {
+        "Access-Control-Allow-Origin": "*"
+      }
     },
     {
       "src": "/(.*)",
-      "dest": "src/server.ts"
+      "dest": "src/server.ts",
+      "headers": {
+        "Access-Control-Allow-Origin": "*"
+      }
     }
   ]
 }

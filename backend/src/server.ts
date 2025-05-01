@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import serverless from "serverless-http";
 import { errorHandler } from "./middlewares/errorHandler";
 
 // 1. Environment setup
@@ -15,8 +14,6 @@ connectDB();
 const app = express();
 
 // 4. Middleware setup
-const allowedOrigins = [process.env.CORS_ORIGIN].filter(Boolean);
-
 // Debug middleware to log requests
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
@@ -26,19 +23,11 @@ app.use((req, res, next) => {
 });
 
 const corsOptions = {
-  origin: function (origin: any, callback: any) {
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      console.log("Blocked origin:", origin);
-      console.log("Allowed origins:", allowedOrigins);
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  origin: process.env.CORS_ORIGIN || "http://localhost:3000",
 };
+
+// Handle preflight requests
+app.options("*", cors(corsOptions));
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -49,19 +38,13 @@ app.use("/api", apiRoutes);
 
 // 6. Basic routes
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to the Portfolio API (Lambda)" });
-});
-
-// Add an endpoint to check CORS configuration
-app.get("/cors-test", (req, res) => {
-  res.json({
-    message: "CORS is working",
-    origin: req.headers.origin,
-    allowedOrigins,
-  });
+  res.json({ message: "Welcome to the Portfolio API" });
 });
 
 app.use(errorHandler);
 
-// 7. Export the handler for Lambda instead of listening
-export const handler = serverless(app);
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
